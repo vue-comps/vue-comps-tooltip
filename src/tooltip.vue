@@ -1,6 +1,12 @@
 // out: ..
-<template lang="jade">
-div(:style="style" v-if="opened" v-el:tt v-bind:class="[class]")
+<template lang="pug">
+div(
+  v-bind:style="style"
+  style="position:absolute;display:block;box-sizing:border-box"
+  v-if="opened"
+  v-el:tt
+  v-bind:class="[class]"
+  )
   slot No content
 </template>
 
@@ -42,20 +48,18 @@ module.exports =
     "zIndex":
       type: Number
       default: 100
+    "position":
+      type: String
+      default: "parent"
 
   data: ->
-    removeParentListener: null
-    removeTimeout: null
     style:
-      position: "absolute"
       opacity: 0
       left: undefined
       top: undefined
       width: undefined
       height: undefined
-      display: "block"
       zIndex: @zIndex
-      boxSizing: "border-box"
 
   watch:
     "parent": "setupParent"
@@ -74,14 +78,12 @@ module.exports =
       return if @opened
       @setOpened()
       @$nextTick =>
+        document.body.appendChild @$els.tt if @position == "body"
         parentPos = @parent.getBoundingClientRect()
+        # get real pos depending on position in viewport
         windowSize = @getViewportSize()
         ttHeight = @$els.tt.offsetHeight
         ttWidth = @$els.tt.offsetWidth
-        parentHeight = @parent.offsetHeight
-        parentWidth = @parent.offsetWidth
-        @style.height = ttHeight + 'px'
-        @style.width = ttWidth + 'px'
         height = ttHeight + @offset
         width = ttWidth + @offset
         pos = null
@@ -95,7 +97,9 @@ module.exports =
             break
           else if a == "e" and parentPos.right + width <= windowSize.width
             break
-
+        # get top/left relative to parent nw corner
+        parentHeight = parentPos.height
+        parentWidth = parentPos.width
         if pos == "s"
           top = parentHeight + @offset
           left = parentWidth/2 - ttWidth/2
@@ -108,24 +112,35 @@ module.exports =
         else if pos == "e"
           top = parentHeight/2 - ttHeight/2
           left = parentWidth + @offset
-
-        parentStyle = getComputedStyle(@parent)
-        if parentStyle.getPropertyValue("box-sizing") == "border-box"
-          top -= parseInt(parentStyle.getPropertyValue("border-top-width").replace("px",""))
-          left -= parseInt(parentStyle.getPropertyValue("border-left-width").replace("px",""))
-        isPositioned = /relative|absolute|fixed/.test(parentStyle.getPropertyValue("position"))
-        unless isPositioned
-          top += @parent.offsetTop
-          left += @parent.offsetLeft
+        # positioning in document
+        unless @position == "body"
+          parentStyle = getComputedStyle(@parent)
+          # correct border
+          if parentStyle.getPropertyValue("box-sizing") == "border-box"
+            top -= parseInt(parentStyle.getPropertyValue("border-top-width").replace("px",""))
+            left -= parseInt(parentStyle.getPropertyValue("border-left-width").replace("px",""))
+          isPositioned = /relative|absolute|fixed/.test(parentStyle.getPropertyValue("position"))
+          unless isPositioned
+            top += @parent.offsetTop
+            left += @parent.offsetLeft
+        else
+          body = document.body
+          docEl = document.documentElement
+          scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop
+          scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft
+          top += scrollTop + parentPos.top
+          left += scrollLeft + parentPos.left
+          isPositioned = false
+        # set initial style before open
         if pos == "w" or pos == "e"
           @style.top = top + 'px'
           @style.left = if isPositioned then 0 else @parent.offsetLeft + 'px'
         else
           @style.top = if isPositioned then 0 else @parent.offsetTop + 'px'
           @style.left = left + 'px'
-
-
-
+        @style.height = ttHeight + 'px'
+        @style.width = ttWidth + 'px'
+        # begin opening, wait for initial positioning for transition
         @$emit "beforeOpen"
         @$nextTick =>
           @transitionIn el:@$els.tt,pos:pos,style:{opacity:1,top:top+'px',left:left+'px'},cb: =>
@@ -134,12 +149,21 @@ module.exports =
     hide: ->
       return unless @opened
       @$emit "beforeClose"
-      top = 0
-      left = 0
-      parentStyle = getComputedStyle(@parent)
-      unless /relative|absolute|fixed/.test(parentStyle.getPropertyValue("position"))
-        top += @parent.offsetTop
-        left += @parent.offsetLeft
+      unless @position == "body"
+        top = 0
+        left = 0
+        parentStyle = getComputedStyle(@parent)
+        unless /relative|absolute|fixed/.test(parentStyle.getPropertyValue("position"))
+          top += @parent.offsetTop
+          left += @parent.offsetLeft
+      else
+        body = document.body
+        docEl = document.documentElement
+        scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop
+        scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft
+        parentPos = @parent.getBoundingClientRect()
+        top = scrollTop + parentPos.top
+        left = scrollLeft + parentPos.left
       @transitionOut el:@$els.tt,style:{opacity:0,top:top+'px',left:left+'px'}, cb: =>
         @style.width = undefined
         @style.height = undefined
@@ -150,13 +174,13 @@ module.exports =
         @hide()
       else
         @show()
-  attached: ->
+  ready: ->
     unless @parent?
       @parent = @$el.parentElement
     else
       @setupParent()
 
-  dettached: ->
+  beforeDestroy: ->
     @removeParentListener?()
 
 </script>

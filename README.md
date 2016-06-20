@@ -35,10 +35,11 @@ see [`dev/`](dev/) for examples.
 | class | String | tooltip | class of the `div`|
 | ignore-parent | Boolean | false | will not set-up `mouseenter`/`mouseleave` listener on parent |
 | is-opened	| Boolean	| false | (two-way) set to open / close|
-| transition-in | function | no animation | set animation. Argument: {el,pos,style,cb} |
-| transition-out | function | no animation | set animation. Argument: {el,style,cb} |
+| transition-in | Fnction | no animation | set animation. Argument: {el,pos,style,cb} |
+| transition-out | Function | no animation | set animation. Argument: {el,style,cb} |
 
-| parent | element | parentElement | where the tooltip should attach |
+| parent | Element | parentElement | where the tooltip should attach |
+| position | String | "parent" | Either "parent" or "body". [Detailed description](#Positioning)  |
 
 #### Events
 | Name |  description |
@@ -49,7 +50,10 @@ see [`dev/`](dev/) for examples.
 | before-close |  will be called before close animation |
 | closed |  will be called when closed |
 
-
+#### Positioning
+There are two ways of positioning "parent" or "body".
+- "parent" will leave the element where it is. This can be problematic when you have an `overflow:hidden` as a parent to the nearest element with `position:absolute|relative|fixed` and the tooltip is overflowing.
+- "body" will append the element to `document.body`. This can be problematic when the parent is moving or when you depend on inheritance of styles.
 
 # Development
 Clone repository.

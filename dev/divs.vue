@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
 .container
   div.div.nr1
     tooltip(anchor="s") Content
