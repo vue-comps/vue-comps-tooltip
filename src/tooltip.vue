@@ -82,8 +82,9 @@ module.exports =
         parentPos = @parent.getBoundingClientRect()
         # get real pos depending on position in viewport
         windowSize = @getViewportSize()
-        ttHeight = @$els.tt.offsetHeight
-        ttWidth = @$els.tt.offsetWidth
+        ttPos = @$els.tt.getBoundingClientRect()
+        ttHeight = ttPos.height
+        ttWidth = ttPos.width
         height = ttHeight + @offset
         width = ttWidth + @offset
         pos = null
