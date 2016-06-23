@@ -37,7 +37,6 @@ see [`dev/`](dev/) for examples.
 | is-opened	| Boolean	| false | (two-way) set to open / close|
 | transition-in | Fnction | no animation | set animation. Argument: {el,pos,style,cb} |
 | transition-out | Function | no animation | set animation. Argument: {el,style,cb} |
-
 | parent | Element | parentElement | where the tooltip should attach |
 | position | String | "parent" | Either "parent" or "body". [Detailed description](#Positioning)  |
 
