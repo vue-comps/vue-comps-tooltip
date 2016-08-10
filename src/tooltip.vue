@@ -1,11 +1,11 @@
 // out: ..
 <template lang="pug">
 div(
-  v-bind:style="style"
+  v-bind:style="computedStyle"
   style="position:absolute;display:block;box-sizing:border-box"
   v-if="opened"
   v-el:tt
-  v-bind:class="[class]"
+  v-bind:class="class"
   )
   slot No content
 </template>
@@ -16,12 +16,14 @@ module.exports =
   mixins:[
     require("vue-mixins/getViewportSize")
     require("vue-mixins/isOpened")
+    require("vue-mixins/style")
   ]
 
   props:
+    "style":
+      default: -> []
     "class":
-      type: String
-      default: "tooltip"
+      default: -> ["tooltip"]
     "anchor":
       type: String
       default: "snwe"
@@ -32,13 +34,13 @@ module.exports =
       type: Function
       default: ({el,pos,style,cb}) ->
         for key,val of style
-          @style[key] = val
+          @mergeStyle[key] = val
         cb()
     "transitionOut":
       type: Function
       default: ({el,style,cb}) ->
         for key,val of style
-          @style[key] = val
+          @mergeStyle[key] = val
         cb()
     "ignoreParent":
       type: Boolean
@@ -53,7 +55,7 @@ module.exports =
       default: "parent"
 
   data: ->
-    style:
+    mergeStyle:
       opacity: 0
       left: undefined
       top: undefined
@@ -63,7 +65,7 @@ module.exports =
 
   watch:
     "parent": "setupParent"
-    "zIndex": (val) -> @style.zIndex = val
+    "zIndex": (val) -> @mergeStyle.zIndex = val
 
   methods:
     setupParent: (parent = @parent) ->
@@ -134,13 +136,13 @@ module.exports =
           isPositioned = false
         # set initial style before open
         if pos == "w" or pos == "e"
-          @style.top = top + 'px'
-          @style.left = if isPositioned then 0 else @parent.offsetLeft + 'px'
+          @mergeStyle.top = top + 'px'
+          @mergeStyle.left = if isPositioned then 0 else @parent.offsetLeft + 'px'
         else
-          @style.top = if isPositioned then 0 else @parent.offsetTop + 'px'
-          @style.left = left + 'px'
-        @style.height = ttHeight + 'px'
-        @style.width = ttWidth + 'px'
+          @mergeStyle.top = if isPositioned then 0 else @parent.offsetTop + 'px'
+          @mergeStyle.left = left + 'px'
+        @mergeStyle.height = ttHeight + 'px'
+        @mergeStyle.width = ttWidth + 'px'
         # begin opening, wait for initial positioning for transition
         @$emit "beforeOpen"
         @$nextTick =>
@@ -166,8 +168,8 @@ module.exports =
         top = scrollTop + parentPos.top
         left = scrollLeft + parentPos.left
       @transitionOut el:@$els.tt,style:{opacity:0,top:top+'px',left:left+'px'}, cb: =>
-        @style.width = undefined
-        @style.height = undefined
+        @mergeStyle.width = undefined
+        @mergeStyle.height = undefined
         @setClosed()
         @$emit "closed"
     toggle: ->

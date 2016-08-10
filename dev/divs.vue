@@ -42,7 +42,7 @@ module.exports =
     border-left 5px solid black
   &.nr4
     border-right 5px solid black
-div>.tooltip
+div.div>.tooltip
   margin 0
   padding 2px
   border 1px dashed red

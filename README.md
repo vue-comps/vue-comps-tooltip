@@ -30,12 +30,14 @@ see [`dev/`](dev/) for examples.
 #### Props
 | Name | type | default | description |
 | ---:| --- | ---| --- |
+| class | Array/Object | ["tooltip"] | vue-class of the `div`|
+| style | Array/Object | [] | vue-class of the `div`|
 | offset | Number | 0 | offset to the parent |
 | anchor | String | "snwe" | direction of opening, viewport dependet. "s" forces to open down. "sn" would try to open down, the up. |
-| class | String | tooltip | class of the `div`|
+
 | ignore-parent | Boolean | false | will not set-up `mouseenter`/`mouseleave` listener on parent |
 | is-opened	| Boolean	| false | (two-way) set to open / close|
-| transition-in | Fnction | no animation | set animation. Argument: {el,pos,style,cb} |
+| transition-in | Function | no animation | set animation. Argument: {el,pos,style,cb} |
 | transition-out | Function | no animation | set animation. Argument: {el,style,cb} |
 | parent | Element | parentElement | where the tooltip should attach |
 | position | String | "parent" | Either "parent" or "body". [Detailed description](#Positioning)  |
