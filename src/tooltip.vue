@@ -5,7 +5,8 @@ div(
   style="position:absolute;display:block;box-sizing:border-box"
   v-if="opened"
   v-el:tt
-  v-bind:class="class"
+  v-bind:class="computedClass"
+  v-bind:id="id"
   )
   slot No content
 </template>
@@ -17,9 +18,12 @@ module.exports =
     require("vue-mixins/getViewportSize")
     require("vue-mixins/isOpened")
     require("vue-mixins/style")
+    require("vue-mixins/class")
   ]
 
   props:
+    "id":
+      type: String
     "style":
       default: -> []
     "class":
@@ -30,6 +34,7 @@ module.exports =
     "offset":
       type: Number
       default: 0
+      coerce: Number
     "transitionIn":
       type: Function
       default: ({el,pos,style,cb}) ->
@@ -50,6 +55,7 @@ module.exports =
     "zIndex":
       type: Number
       default: 100
+      coerce: Number
     "position":
       type: String
       default: "parent"

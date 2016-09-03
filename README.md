@@ -1,6 +1,6 @@
 # vue-comps-tooltip
 
-a advanced tooltip.
+a unstyled tooltip, which adjusts opening direction to be in viewport.
 
 ### [Demo](https://vue-comps.github.io/vue-comps-tooltip)
 
@@ -30,15 +30,13 @@ see [`dev/`](dev/) for examples.
 #### Props
 Name | type | default | description
 ---:| --- | ---| ---
-class | Array/Object | ["tooltip"] | vue-class of the `div`|
-style | Array/Object | [] | vue-style of the `div`|
 offset | Number | 0 | offset to the parent
 anchor | String | "snwe" | direction of opening, viewport dependet. "s" forces to open down. "sn" would try to open down, the up.
 ignore-parent | Boolean | false | will not set-up `mouseenter`/`mouseleave` listener on parent
 is-opened	| Boolean	| false | (two-way) set to open / close|
 transition-in | Function | no animation | set animation. Argument: {el,pos,style,cb}
 transition-out | Function | no animation | set animation. Argument: {el,style,cb}
-parent | Element | parentElement | where the tooltip should attach
+parent | Element | parentElement | where the tooltip should attach its listeners
 position | String | "parent" | Either "parent" or "body". [Detailed description](#Positioning)
 
 #### Events
