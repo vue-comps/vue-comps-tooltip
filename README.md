@@ -36,7 +36,7 @@ ignore-parent | Boolean | false | will not set-up `mouseenter`/`mouseleave` list
 is-opened	| Boolean	| false | (two-way) set to open / close
 transition | String | - | name of a vue transition. [Detailed description](#transition)
 parent | Element | parentElement | where the tooltip should attach its listeners
-onBody | Boolean | false | will be positioned on body instead of parent element. [Detailed description](#positioning)
+on-body | Boolean | false | will be positioned on body instead of parent element. [Detailed description](#positioning)
 
 #### Events
 Name |  description
@@ -65,7 +65,7 @@ transitions: {
   }
 }
 // usage:
-template: "<tooltip transition='fade'"
+template: "<tooltip transition='fade'></tooltip>"
 ```
 
 You can access several properties in your enter hook:
@@ -83,6 +83,12 @@ enter: function(el,cb) {
 ```
 
 see [`dev/transition`](dev/transition.vue) for a working example.
+
+## Changelog
+- 1.0.0  
+renamed `position` prop to `on-body` - now is a boolean  
+now using vue transitions  
+events are renamed after vue transitions  
 
 
 # Development
