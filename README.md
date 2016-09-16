@@ -31,9 +31,9 @@ see [`dev/`](dev/) for examples.
 Name | type | default | description
 ---:| --- | ---| ---
 offset | Number | 0 | offset to the parent
-anchor | String | "snwe" | direction of opening, viewport dependet. "s" forces to open down. "sn" would try to open down, the up.
+anchor | String | "snwe" | direction of opening, viewport dependent. "s" forces to open down. "sn" would try to open down, the up.
 ignore-parent | Boolean | false | will not set-up `mouseenter`/`mouseleave` listener on parent
-is-opened	| Boolean	| false | (two-way) set to open / close|
+is-opened	| Boolean	| false | (two-way) set to open / close
 transition | String | - | name of a vue transition. [Detailed description](#transition)
 parent | Element | parentElement | where the tooltip should attach its listeners
 onBody | Boolean | false | will be positioned on body instead of parent element. [Detailed description](#positioning)
@@ -59,12 +59,13 @@ Vue.transition("fade",{
   // your transition
 })
 // or in the instance:
-template: "<tooltip :transition='fade'",
 transitions: {
   fade: {
     // your transition
   }
 }
+// usage:
+template: "<tooltip transition='fade'"
 ```
 
 You can access several properties in your enter hook:
