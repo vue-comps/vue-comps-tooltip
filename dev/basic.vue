@@ -1,19 +1,19 @@
 <template lang="pug">
 .container
-  button hover
-    tooltip Content
-  button hover
-    tooltip Content
-  button hover
-    tooltip Content
-  button hover
-    tooltip Content
-  button hover
-    tooltip(anchor="s") so much Content. wow
-  button hover
-    tooltip(anchor="e") so much Content. wow
-  button hover
-    tooltip(anchor="w") so much Content. wow
+  button(v-el:topleft)  hover
+    tooltip(v-ref:topleft) Content
+  button(v-el:topright) hover
+    tooltip(v-ref:topright) Content
+  button(v-el:bottomleft) hover
+    tooltip(v-ref:bottomleft) Content
+  button(v-el:bottomright) hover
+    tooltip(v-ref:bottomright) Content
+  button(v-el:s) hover
+    tooltip(anchor="s" v-ref:s) so much Content. wow
+  button(v-el:e) hover
+    tooltip(anchor="e" v-ref:e) so much Content. wow
+  button(v-el:w) hover
+    tooltip(anchor="w" v-ref:w) so much Content. wow
   a(href="https://github.com/vue-comps/vue-comps-tooltip/blob/master/dev/basic.vue") source
 </template>
 
@@ -31,6 +31,7 @@ module.exports =
   top 40px
 button
   position absolute
+  border none
   &:nth-child(1)
     top 10px
     left 10px

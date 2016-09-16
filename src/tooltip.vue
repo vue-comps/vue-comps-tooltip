@@ -8,7 +8,7 @@ div(
   v-bind:id="id"
   v-bind:transition="cTransition"
   )
-  slot No content
+  slot
 </template>
 
 <script lang="coffee">
@@ -19,7 +19,6 @@ module.exports =
     require("vue-mixins/isOpened")
     require("vue-mixins/style")
     require("vue-mixins/class")
-    require("vue-mixins/setCss")
     require("vue-mixins/transition")
   ]
 
@@ -55,7 +54,6 @@ module.exports =
         width: @width+"px"
         height: @height+"px"
         position:"absolute"
-        visibility: if @opened then null else "hidden"
         display:"block"
         boxSizing:"border-box"
         zIndex: @zIndex
