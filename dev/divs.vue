@@ -1,11 +1,11 @@
 <template lang="pug">
 .container
   div.div.nr1
-    tooltip(anchor="s") Content
+    tooltip(anchor="n") Content
   div.div.nr2
     tooltip(anchor="s") Content
   div.div.nr3
-    tooltip(anchor="e") Content
+    tooltip(anchor="w") Content
   div.div.nr4
     tooltip(anchor="e") Content
   div.div.nr5

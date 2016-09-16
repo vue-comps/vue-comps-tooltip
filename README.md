@@ -34,24 +34,55 @@ offset | Number | 0 | offset to the parent
 anchor | String | "snwe" | direction of opening, viewport dependet. "s" forces to open down. "sn" would try to open down, the up.
 ignore-parent | Boolean | false | will not set-up `mouseenter`/`mouseleave` listener on parent
 is-opened	| Boolean	| false | (two-way) set to open / close|
-transition-in | Function | no animation | set animation. Argument: {el,pos,style,cb}
-transition-out | Function | no animation | set animation. Argument: {el,style,cb}
+transition | String | - | name of a vue transition. [Detailed description](#transition)
 parent | Element | parentElement | where the tooltip should attach its listeners
-position | String | "parent" | Either "parent" or "body". [Detailed description](#Positioning)
+onBody | Boolean | false | will be positioned on body instead of parent element. [Detailed description](#positioning)
 
 #### Events
 Name |  description
 ---:| ---
-close |  when received, will close
-before-open | will be called before open animation
-opened |  will be called when opened
-before-close |  will be called before close animation
-closed |  will be called when closed
+before-enter | will be called before open animation
+after-enter |  will be called when opened
+before-leave |  will be called before close animation
+after-leave |  will be called when closed
 
 #### Positioning
-There are two ways of positioning "parent" or "body".
-- "parent" will leave the element where it is. This can be problematic when you have an `overflow:hidden` as a parent to the nearest element with `position:absolute|relative|fixed` and the tooltip is overflowing.
-- "body" will append the element to `document.body`. This can be problematic when the parent is moving or when you depend on inheritance of styles.
+There are two ways of positioning. The default is as a child of the parent element, the other posibility is on `body`.
+- The parent positioning can be problematic when you have an `overflow:hidden` as a parent to the nearest element with `position:absolute|relative|fixed` and the tooltip is overflowing.
+- the `body` positioning can be problematic when the parent is moving relative to `body` or when you depend on inheritance of styles.
+
+#### Transition
+
+You can provide a vue transition like this:
+```js
+Vue.transition("fade",{
+  // your transition
+})
+// or in the instance:
+template: "<tooltip :transition='fade'",
+transitions: {
+  fade: {
+    // your transition
+  }
+}
+```
+
+You can access several properties in your enter hook:
+```js
+enter: function(el,cb) {
+  // in which direction the tooltip will open. one of s, n, w or e
+  this.direction
+  // style properties as numbers
+  this.top
+  this.left
+  this.width
+  this.height
+  this.offset // will be added on or subtracted of top or left depending on direction
+}
+```
+
+see [`dev/transition`](dev/transition.vue) for a working example.
+
 
 # Development
 Clone repository.

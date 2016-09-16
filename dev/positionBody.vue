@@ -1,19 +1,19 @@
 <template lang="pug">
 .container
   button hover
-    tooltip(position="body") Content
+    tooltip(on-body) Content
   button hover
-    tooltip(position="body") Content
+    tooltip(on-body) Content
   button hover
-    tooltip(position="body") Content
+    tooltip(on-body) Content
   button hover
-    tooltip(position="body") Content
+    tooltip(on-body) Content
   button hover
-    tooltip(anchor="s" position="body") so much Content. wow
+    tooltip(anchor="s" on-body) so much Content. wow
   button hover
-    tooltip(anchor="e" position="body") so much Content. wow
+    tooltip(anchor="e" on-body) so much Content. wow
   button hover
-    tooltip(anchor="w" position="body") so much Content. wow
+    tooltip(anchor="w" on-body) so much Content. wow
   a(href="https://github.com/vue-comps/vue-comps-tooltip/blob/master/dev/basic.vue") source
 </template>
 
