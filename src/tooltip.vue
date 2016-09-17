@@ -165,7 +165,7 @@ module.exports =
         scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft
         top += scrollTop + parentPos.top
         left += scrollLeft + parentPos.left
-        isPositioned = false
+
       @top = top
       @left = left
 </script>
