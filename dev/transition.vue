@@ -1,7 +1,7 @@
 <template lang="pug">
 .container
   button hover
-    tooltip(style="opacity:0" transition="tooltip") so much Content. wow
+    tooltip(style="opacity:0") so much Content. wow
   br
   a(href="https://github.com/vue-comps/vue-comps-tooltip/blob/master/dev/basic.vue") source
 </template>

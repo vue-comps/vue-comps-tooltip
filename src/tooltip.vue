@@ -23,31 +23,34 @@ module.exports =
   ]
 
   props:
-    "id":
+    id:
       type: String
-    "style":
+    style:
       default: -> []
-    "class":
+    class:
       default: -> ["tooltip"]
-    "anchor":
+    anchor:
       type: String
       default: "snwe"
-    "offset":
+    offset:
       type: Number
       default: 0
       coerce: Number
-    "ignoreParent":
+    ignoreParent:
       type: Boolean
       default: false
-    "parent":
+    parent:
       type: Object
-    "zIndex":
+    zIndex:
       type: Number
       default: 100
       coerce: Number
-    "onBody":
+    onBody:
       type: Boolean
       default: false
+    transition:
+      type: String
+      default: "tooltip"
   computed:
     mergeStyle: ->
       style =

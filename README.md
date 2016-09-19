@@ -34,7 +34,7 @@ offset | Number | 0 | offset to the parent
 anchor | String | "snwe" | direction of opening, viewport dependent. "s" forces to open down. "sn" would try to open down, the up.
 ignore-parent | Boolean | false | will not set-up `mouseenter`/`mouseleave` listener on parent
 is-opened	| Boolean	| false | (two-way) set to open / close
-transition | String | - | name of a vue transition. [Detailed description](#transition)
+transition | String | "tooltip" | name of a vue transition. [Detailed description](#transition)
 parent | Element | parentElement | where the tooltip should attach its listeners
 on-body | Boolean | false | will be positioned on body instead of parent element. [Detailed description](#positioning)
 
@@ -86,8 +86,9 @@ enter: function(el,cb) {
 see [`dev/transition`](dev/transition.vue) for a working example.
 
 ## Changelog
--  
+- 1.1.0  
 added toggled event  
+set default transition  
 
 - 1.0.0  
 renamed `position` prop to `on-body` - now is a boolean  
