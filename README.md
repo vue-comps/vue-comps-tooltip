@@ -1,3 +1,5 @@
+# DEPRECATED see [cerijs](https://github.com/cerijs) and [ceri-tooltip](https://github.com/ceri-comps/ceri-tooltip)
+
 # vue-comps-tooltip
 
 a unstyled tooltip, which adjusts opening direction to be in viewport.
